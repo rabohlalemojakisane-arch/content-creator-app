@@ -8,10 +8,15 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000', 
+    'https://content-creator-app-cewj-git-main-rabohlale.vercel.app'
+  ]
+}));
+
 app.use(express.json());
 
-// --- THESE LINES MUST BE HERE ---
 const authRoutes = require('./routes/authRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 const commentRoutes = require('./routes/commentRoutes');
@@ -23,7 +28,6 @@ app.use('/api/contents', contentRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/likes', likeRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-// --------------------------------
 
 app.get('/', (req, res) => {
   res.send('Content Creator API is running...');
